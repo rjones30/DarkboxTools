@@ -145,7 +145,7 @@ Tpreamp2_text="<font color=\"$Tpreamp2_color\">$Tpreamp2_level &plusmn; $Tpreamp
 normfact_level=`awk '/normalization level *= */{print $4}' /tmp/oput`
 normfact_error=`awk '/normalization level *= */{print $6}' /tmp/oput`
 normfact_unit=`awk '/normalization level *= */{print $7}' /tmp/oput`
-normfact_color=`awk '/normalization level *= */{if ($4 > 700 && $4 < 1000 && $6 < 50) {print "black"} else {print "red"}}' /tmp/oput`
+normfact_color=`awk '/normalization level *= */{if ($4 > 2000 && $4 < 2500 && $6 < 100) {print "black"} else {print "red"}}' /tmp/oput`
 normfact_text="<font color=\"$normfact_color\">$normfact_level &plusmn; $normfact_error $normfact_unit</font>"
 
 #rm /tmp/oput
