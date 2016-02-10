@@ -121,7 +121,7 @@ Vsumref2_text="<font color=\"$Vsumref2_color\">$Vsumref2_level &plusmn; $Vsumref
 VDAChealth_level=`awk '/VDAChealth level *= */{print $4}' /tmp/oput`
 VDAChealth_error=`awk '/VDAChealth level *= */{print $6}' /tmp/oput`
 VDAChealth_unit=`awk '/VDAChealth level *= */{print $7}' /tmp/oput`
-VDAChealth_color=`awk '/VDAChealth level *= */{if ($4 > 12.9 && $4 < 13.1 && $6 < 0.05) {print "black"} else {print "red"}}' /tmp/oput`
+VDAChealth_color=`awk '/VDAChealth level *= */{if ($4 > 12.9 && $4 < 13.9 && $6 < 0.05) {print "black"} else {print "red"}}' /tmp/oput`
 VDAChealth_text="<font color=\"$VDAChealth_color\">$VDAChealth_level &plusmn; $VDAChealth_error $VDAChealth_unit</font>"
 
 TDAC_level=`awk '/TDAC level *= */{print $4}' /tmp/oput`
