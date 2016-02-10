@@ -1,0 +1,12 @@
+/fiberQA-11-2015
+/fiberQA-2-2014
+/archives
+/data
+/old
+/tmp
+/bin/*
+/test
+*-orig
+*.pyc
+*.o
+*.so
