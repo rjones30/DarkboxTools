@@ -183,57 +183,57 @@ Content-type: text/html
 
 <hr/>
 <p align="center"><font size="+2">
-Front half-bundle, viewing the scintillating fiber with dark box open
+Front half-bundle, viewing the scintillating fiber from the open end
 </font></p>
 <table align="center">
 <tr>
- <td><img src="$histos/run_$run/fiber_15.png"/></td>
- <td><img src="$histos/run_$run/fiber_10.png"/></td>
- <td><img src="$histos/run_$run/fiber_5.png"/></td>
+ <td><img src="$histos/run_$run/fiber_20.png"/></td>
+ <td><img src="$histos/run_$run/fiber_25.png"/></td>
+ <td><img src="$histos/run_$run/fiber_30.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_14.png"/></td>
- <td><img src="$histos/run_$run/fiber_9.png"/></td>
- <td><img src="$histos/run_$run/fiber_4.png"/></td>
+ <td><img src="$histos/run_$run/fiber_19.png"/></td>
+ <td><img src="$histos/run_$run/fiber_24.png"/></td>
+ <td><img src="$histos/run_$run/fiber_29.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_13.png"/></td>
- <td><img src="$histos/run_$run/fiber_8.png"/></td>
- <td><img src="$histos/run_$run/fiber_3.png"/></td>
+ <td><img src="$histos/run_$run/fiber_18.png"/></td>
+ <td><img src="$histos/run_$run/fiber_23.png"/></td>
+ <td><img src="$histos/run_$run/fiber_28.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_12.png"/></td>
- <td><img src="$histos/run_$run/fiber_7.png"/></td>
- <td><img src="$histos/run_$run/fiber_2.png"/></td>
+ <td><img src="$histos/run_$run/fiber_17.png"/></td>
+ <td><img src="$histos/run_$run/fiber_22.png"/></td>
+ <td><img src="$histos/run_$run/fiber_27.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_11.png"/></td>
- <td><img src="$histos/run_$run/fiber_6.png"/></td>
- <td><img src="$histos/run_$run/fiber_1.png"/></td>
+ <td><img src="$histos/run_$run/fiber_16.png"/></td>
+ <td><img src="$histos/run_$run/fiber_21.png"/></td>
+ <td><img src="$histos/run_$run/fiber_26.png"/></td>
 </tr><tr>
 </table>
 
 <hr/>
 <p align="center"><font size="+2">
-Back half-bundle, viewing the scintillating fiber with dark box open
+Back half-bundle, viewing the scintillating fiber from the open end
 </font></p>
 <table align="center">
 <tr>
- <td><img src="$histos/run_$run/fiber_30.png"/></td>
- <td><img src="$histos/run_$run/fiber_25.png"/></td>
- <td><img src="$histos/run_$run/fiber_20.png"/></td>
+ <td><img src="$histos/run_$run/fiber_1.png"/></td>
+ <td><img src="$histos/run_$run/fiber_6.png"/></td>
+ <td><img src="$histos/run_$run/fiber_11.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_29.png"/></td>
- <td><img src="$histos/run_$run/fiber_24.png"/></td>
- <td><img src="$histos/run_$run/fiber_19.png"/></td>
+ <td><img src="$histos/run_$run/fiber_2.png"/></td>
+ <td><img src="$histos/run_$run/fiber_7.png"/></td>
+ <td><img src="$histos/run_$run/fiber_12.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_28.png"/></td>
- <td><img src="$histos/run_$run/fiber_23.png"/></td>
- <td><img src="$histos/run_$run/fiber_18.png"/></td>
+ <td><img src="$histos/run_$run/fiber_3.png"/></td>
+ <td><img src="$histos/run_$run/fiber_8.png"/></td>
+ <td><img src="$histos/run_$run/fiber_13.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_27.png"/></td>
- <td><img src="$histos/run_$run/fiber_22.png"/></td>
- <td><img src="$histos/run_$run/fiber_17.png"/></td>
+ <td><img src="$histos/run_$run/fiber_4.png"/></td>
+ <td><img src="$histos/run_$run/fiber_9.png"/></td>
+ <td><img src="$histos/run_$run/fiber_14.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_26.png"/></td>
- <td><img src="$histos/run_$run/fiber_21.png"/></td>
- <td><img src="$histos/run_$run/fiber_16.png"/></td>
+ <td><img src="$histos/run_$run/fiber_5.png"/></td>
+ <td><img src="$histos/run_$run/fiber_10.png"/></td>
+ <td><img src="$histos/run_$run/fiber_15.png"/></td>
 </tr><tr>
 </table>
 </body>

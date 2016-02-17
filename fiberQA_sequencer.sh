@@ -209,10 +209,10 @@ function calibrate() {
     sleep 2
     for n in 1 2 3 4 5 6 7; do
         xdotool key ctrl+c
-        sleep 1
+        sleep 2
     done
     xdotool key ctrl+d
-    sleep 1
+    sleep 2
     xdotool key ctrl+d
     echo
     echo "The rcgui window should have gone away, and all of the miniature"
@@ -312,7 +312,7 @@ for n in 1 2 3 4 5 6 7; do
     sleep 1
 done
 xdotool key ctrl+d
-sleep 1
+sleep 2
 xdotool key ctrl+d
 
 exit 0
