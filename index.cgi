@@ -8,7 +8,7 @@
 histos=histos
 run=`ls -t $histos | head -n1 | awk -F_ '{print $2}'`
 
-if echo $QUERY_STRING | grep -q 'run=' ; then
+if echo $QUERY_STRING | grep -q '^run=' ; then
     run=`echo $QUERY_STRING | awk -F= '{print $2}'`
 elif [[ "$QUERY_STRING" != "" ]]; then
     echo "Content-type: text/html"
@@ -20,7 +20,7 @@ elif [[ "$QUERY_STRING" != "" ]]; then
     echo "<body>"
     echo "<h1 align=\"center\">FiberQA Data Collector and Analyzer</h1>"
     echo "<p align=\"center\"><font size=\"+3\">"
-    if [[ "$QUERY_STRING" == "newrun" ]]; then
+    if echo $QUERY_STRING | grep -q "^newrun=[A-Z]"; then
         if [[ -d newrun-underway ]]; then
             when=`ls -ld newrun-underway | awk '{print $6,$7",",$8}'`
             echo "A run is already underway, started $when."
@@ -31,6 +31,11 @@ elif [[ "$QUERY_STRING" != "" ]]; then
             echo "<a href=\"$SCRIPT_NAME?cancel\">here</a> to cancel request"
         else
             mkdir newrun-requested
+            chmod go+w newrun-requested
+            echo $QUERY_STRING | awk -F= '/^newrun=/{print $2}' \
+                               | php -R 'echo urldecode($argn);'\
+                               | sed 's/;$//' \
+                               > newrun-requested/requestor
             echo "New run request submitted, click"
             echo "<a href=\"$SCRIPT_NAME?status\">here</a> for status."
         fi
@@ -40,18 +45,23 @@ elif [[ "$QUERY_STRING" != "" ]]; then
             echo "A run is already underway, started $when,"
             echo "<br/>It is too late to cancel, let it finish."
         elif [[ -d newrun-requested ]]; then
-            rmdir newrun-requested
+            rm -rf newrun-requested
             echo "Run request has been cancelled."
         else
             echo "No run request queued, nothing to cancel."
         fi
     elif [[ "$QUERY_STRING" == "status" ]]; then
+        if [[ -r newrun-requested/requestor ]]; then
+            requestor=`cat newrun-requested/requestor`
+        else
+            requestor=Anonymous
+        fi
         if [[ -d newrun-underway ]]; then
             when=`ls -ld newrun-underway | awk '{print $6,$7",",$8}'`
-            echo "A run is underway, started $when."
+            echo "$requestor has a run going, started $when."
         elif [[ -d newrun-requested ]]; then
             when=`ls -ld newrun-requested | awk '{print $6,$7",",$8}'`
-            echo "A run has been requested, queued $when."
+            echo "A run has been requested by $requestor, queued $when."
             echo "<br/>Click"
             echo "<a href=\"$SCRIPT_NAME?cancel\">here</a> to cancel request"
         else
@@ -67,6 +77,23 @@ fi
 
 ./runcond.py $run >/tmp/oput
 date=`awk '/^run [0-9]* started/{print $4,$5,$6,$7,$8}' /tmp/oput`
+if [[ -z "$date" ]]; then
+    cat <<EOI
+Content-type: text/html
+
+<html>
+<head>
+<title>No such run</title>
+</head>
+<body>
+<h1 align="center">no such run $run</h1>
+</body>
+</html>
+EOI
+    exit 1
+fi
+
+requestor=`awk '/^run requestor /{print $3,$4,$5,$6,$7,$8}' /tmp/oput | sed 's/ *$//'`
 
 Tchip_level=`awk '/Tchip *= */{print $3}' /tmp/oput`
 Tchip_error=`awk '/Tchip *= */{print $5}' /tmp/oput`
@@ -159,7 +186,7 @@ Content-type: text/html
 </head>
 <body>
 <h1 align="center">FiberQA Data Analysis Results for Run $run</h1>
-<p align="center"><font size="+1">$date</font></p>
+<p align="center"><font size="+1">run requested by $requestor, $date</font></p>
 
 <table align="center">
 <tr><td align="right">FPGA power</td><td align="right" width="140">$FPGApower_text</td>

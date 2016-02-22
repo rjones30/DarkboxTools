@@ -57,9 +57,13 @@ for line in cronlog:
    Achip = []
    for chan in range(16):
       Achip.append([0, 0, 0])
-   m = re.match("New run starting (.*)", line)
+   m = re.match(r"New run starting (.*)", line)
    if m:
       date = m.group(1)
+      requestor = "unknown"
+   m2 = re.match(r"This run was requested by (.*)", line)
+   if m2:
+      requestor = m2.group(1)
    if re.match("Trace of query packets during above sequences was:", line):
       q_packet_count = 0
       for line in cronlog:
@@ -85,6 +89,7 @@ for line in cronlog:
          m = re.match("New run starting (.*)", line)
          if m:
             date = m.group(1)
+            requestor = "unknown"
             run = -1
             break
          m = re.match("normalization pulse height mean = ([0-9.]+), rms = ([0-9.]+)", line)
@@ -195,6 +200,7 @@ for line in cronlog:
                          thermister_const[0] - Tpreamp2_level
 
       print "run", run, "started", date
+      print "run requestor", requestor
       print "  Tchip = ", "%.2f" % Tmean_cb, "+/-", "%.2f" % Trms_cb, "C"
       print "  +5V level = ", "%.3f" % pos5V_level, "+/-", "%.3f" % pos5V_rms, "V"
       print "  -5V level = ", "%.3f" % neg5V_level, "+/-", "%.3f" % neg5V_rms, "V"

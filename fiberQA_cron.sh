@@ -26,8 +26,14 @@ if [[ -d $base/newrun-requested ]]; then
 
 #   here is where the data collection starts
     exec >> $base/fiberQA_cron.log 2>&1
+    if [[ -r $base/newrun-requested/requestor ]]; then
+        requestor=`cat $base/newrun-requested/requestor`
+    else
+        requestor=Anonymous
+    fi
     echo
     echo "New run starting" `date`
+    echo "This run was requested by $requestor"
     cd $base
     ./fiberQA_sequencer.sh :23
 
@@ -51,5 +57,5 @@ if [[ -d $base/newrun-requested ]]; then
     export DISPLAY=:23
     ./plotmaker.py $run
     echo Successful collection and analysis of run $run
-    rmdir newrun-requested newrun-underway
+    rm -rf newrun-requested newrun-underway
 fi

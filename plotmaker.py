@@ -33,27 +33,32 @@ def plot(run):
       qvar = "Q[{0:d}]".format(spigot[chan / 5])
       qcon = "status==0x{0:x}01".format(chan + 1)
       qnot = "status==0x{0:x}01".format(((chan + 1) % 11) + 5)
-      v792.Draw(qvar, qnot)
-      htemp = gROOT.FindObject("htemp")
-      pedestal = htemp.GetMean()
-      qvar = "(" + qvar + "-" + str(pedestal) + ")/" + str(counts_per_pixel)
-      v792.Draw(qvar, qcon)
-      htemp = gROOT.FindObject("htemp")
-      htemp.SetTitle("fiber {0:d}".format(chan + 1))
-      htemp.GetXaxis().SetTitle("pulse height (pixels)")
-      htemp.Draw()
-      c1.Print("histos/run_{0:03d}/fiber_{1:d}.png".format(run, chan + 1))
+      if v792.Draw(qvar, qnot) > 0:
+         htemp = gROOT.FindObject("htemp")
+         pedestal = htemp.GetMean()
+         qvar = "(" + qvar + "-" + str(pedestal) + ")/" + str(counts_per_pixel)
+         v792.Draw(qvar, qcon)
+         htemp = gROOT.FindObject("htemp")
+         htemp.SetTitle("fiber {0:d}".format(chan + 1))
+         htemp.GetXaxis().SetTitle("pulse height (pixels)")
+         htemp.Draw()
+         c1.Print("histos/run_{0:03d}/fiber_{1:d}.png".format(run, chan + 1))
+      else:
+         print "no data received for channel", chan
       qvar2 = "Q[{0:d}]".format(spigot[chan / 5 + 3])
-      v792.Draw(qvar2, qnot)
-      htemp = gROOT.FindObject("htemp")
-      pedestal2 = htemp.GetMean()
-      qvar2 = "(" + qvar2 + "-" + str(pedestal2) + ")/" + str(counts_per_pixel)
-      v792.Draw(qvar2, qcon)
-      htemp = gROOT.FindObject("htemp")
-      htemp.SetTitle("fiber {0:d}".format(chan + 16))
-      htemp.GetXaxis().SetTitle("pulse height (pixels)")
-      htemp.Draw()
-      c1.Print("histos/run_{0:03d}/fiber_{1:d}.png".format(run, chan + 16))
+      if v792.Draw(qvar2, qnot) > 0:
+         htemp = gROOT.FindObject("htemp")
+         pedestal2 = htemp.GetMean()
+         qvar2 = "(" + qvar2 + "-" + str(pedestal2) + ")/" + \
+                                     str(counts_per_pixel)
+         v792.Draw(qvar2, qcon)
+         htemp = gROOT.FindObject("htemp")
+         htemp.SetTitle("fiber {0:d}".format(chan + 16))
+         htemp.GetXaxis().SetTitle("pulse height (pixels)")
+         htemp.Draw()
+         c1.Print("histos/run_{0:03d}/fiber_{1:d}.png".format(run, chan + 16))
+      else:
+         print "no data received for channel", chan
 
 if len(sys.argv) < 2:
    usage()
