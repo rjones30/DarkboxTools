@@ -96,7 +96,7 @@ for line in cronlog:
          if m:
             norm[0] = float(m.group(1))
             norm[1] = float(m.group(2))
-         m = re.match("Successful collection and analysis of run ([0-9]+)", line)
+         m = re.match(r"Successful collection.* of run ([0-9]+)", line)
          if m:
             run = m.group(1)
             break
@@ -136,23 +136,23 @@ for line in cronlog:
       VFPGApower_level = Amean[3]*1.005 * 2*Vref/4096
       VFPGApower_rms = math.sqrt(Avari[3])*1.005 * 2*Vref/4096
 
-      # Vsumref1(V) = ADC[9]*1.005 * 2*Vref/2^12
-      # Vsumref2(V) = ADC[12]*1.005 * 2*Vref/2^12
-      Vsumref1_level = Amean[9]*1.005 * 2*Vref/4096
-      Vsumref1_rms = math.sqrt(Avari[9])*1.005 * 2*Vref/4096
-      Vsumref2_level = Amean[12]*1.005 * 2*Vref/4096
-      Vsumref2_rms = math.sqrt(Avari[12])*1.005 * 2*Vref/4096
+      # Vsumref2(V) = ADC[9]*1.005 * 2*Vref/2^12
+      # Vsumref1(V) = ADC[12]*1.005 * 2*Vref/2^12
+      Vsumref2_level = Amean[9]*1.005 * 2*Vref/4096
+      Vsumref2_rms = math.sqrt(Avari[9])*1.005 * 2*Vref/4096
+      Vsumref1_level = Amean[12]*1.005 * 2*Vref/4096
+      Vsumref1_rms = math.sqrt(Avari[12])*1.005 * 2*Vref/4096
 
       # Vgainmode(V) = ADC[10]*2.018 * 2*Vref/4096
       Vgainmode_level = Amean[10]*2.018 * 2*Vref/4096
       Vgainmode_rms = math.sqrt(Avari[10])*2.018 * 2*Vref/4096
 
-      # Vtherm1(V) = ADC[11]*1.005 * 2*Vref/4096
-      # Vtherm2(V) = ADC[15]*1.005 * 2*Vref/4096
-      Vtherm1_level = Amean[11]*1.005 * 2*Vref/4096
-      Vtherm1_rms = math.sqrt(Avari[11])*1.005 * 2*Vref/4096
-      Vtherm2_level = Amean[15]*1.005 * 2*Vref/4096
-      Vtherm2_rms = math.sqrt(Avari[15])*1.005 * 2*Vref/4096
+      # Vtherm2(V) = ADC[11]*1.005 * 2*Vref/4096
+      # Vtherm1(V) = ADC[15]*1.005 * 2*Vref/4096
+      Vtherm2_level = Amean[11]*1.005 * 2*Vref/4096
+      Vtherm2_rms = math.sqrt(Avari[11])*1.005 * 2*Vref/4096
+      Vtherm1_level = Amean[15]*1.005 * 2*Vref/4096
+      Vtherm1_rms = math.sqrt(Avari[15])*1.005 * 2*Vref/4096
 
       # VDACtemp(V) = ADC[13]*1.005 * 2*Vref/4096
       VDACtemp_level = Amean[13]*1.005 * 2*Vref/4096
