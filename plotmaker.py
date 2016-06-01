@@ -65,13 +65,14 @@ def plot(run):
    for chan in range(0, 15):
       qvar = "Q[{0:d}]".format(spigot[chan / 5])
       qcon = "status==0x{0:x}01".format(chan + 1)
+      qovfl = qvar + "<4096";
       qnot = "status==0x{0:x}01".format(((chan + 1) % 11) + 5)
       if v792.Draw(qvar, qnot) > 0:
          htemp = gROOT.FindObject("htemp")
          pedestal = htemp.GetMean()
          qvar = "(" + qvar + "-" + str(pedestal) + ")*" + \
                                    str(tcorr1) + "/" + str(counts_per_pixel)
-         v792.Draw(qvar, qcon)
+         v792.Draw(qvar, qcon + "&&" + qovfl)
          htemp = gROOT.FindObject("htemp")
          htemp.SetTitle("fiber {0:d}".format(chan + 1))
          htemp.GetXaxis().SetTitle("pulse height (pixels)")
@@ -80,12 +81,13 @@ def plot(run):
       else:
          print "no data received for channel", chan
       qvar2 = "Q[{0:d}]".format(spigot[chan / 5 + 3])
+      qovf2 = qvar2 + "<4096"
       if v792.Draw(qvar2, qnot) > 0:
          htemp = gROOT.FindObject("htemp")
          pedestal2 = htemp.GetMean()
          qvar2 = "(" + qvar2 + "-" + str(pedestal2) + ")*" + \
                                      str(tcorr2) + "/" + str(counts_per_pixel)
-         v792.Draw(qvar2, qcon)
+         v792.Draw(qvar2, qcon + "&&" + qovf2)
          htemp = gROOT.FindObject("htemp")
          htemp.SetTitle("fiber {0:d}".format(chan + 16))
          htemp.GetXaxis().SetTitle("pulse height (pixels)")
