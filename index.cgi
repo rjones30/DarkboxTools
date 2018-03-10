@@ -10,6 +10,30 @@ run=`ls -t $histos | head -n1 | awk -F_ '{print $2}'`
 
 if echo $QUERY_STRING | grep -q '^run=' ; then
     run=`echo $QUERY_STRING | awk -F= '{print $2}'`
+elif echo $QUERY_STRING | grep -q "^regenplots="; then
+    run=`echo $QUERY_STRING | awk -F= '{print $2}'`
+    if echo $LD_LIBRARY_PATH | grep -v -q /usr/local/root/lib; then
+        if [[ -n "$LD_LIBRARY_PATH" ]]; then
+            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/root/lib/root
+        else
+            export LD_LIBRARY_PATH=/usr/local/root/lib/root
+        fi
+    fi
+    if echo $PYTHONPATH | grep -v -q /usr/local/root/lib; then
+        if [[ -n "$PYTHONPATH" ]]; then
+            export PYTHONPATH=$PYTHONPATH:/usr/local/root/lib/root
+        else
+            export PYTHONPATH=/usr/local/root/lib/root
+        fi
+    fi
+    echo "Content-type: text/plain"
+    echo
+    echo running plotmaker
+    echo /bin/rm -rf $histos/run_$run
+    source /home/halld/setup.sh
+    ./plotmaker.py $run 2>&1
+    echo back from plotmaker with exit code $?
+    exit 0
 elif [[ "$QUERY_STRING" != "" ]]; then
     echo "Content-type: text/html"
     echo
@@ -69,10 +93,12 @@ elif [[ "$QUERY_STRING" != "" ]]; then
             echo "<a href=\"$SCRIPT_NAME\">here</a> to see results."
         fi
     fi
-    echo "</font></p>"
-    echo "</body>"
-    echo "</html>"
-    exit
+    if [[ "$doplots" == "" ]]; then
+        echo "</font></p>"
+        echo "</body>"
+        echo "</html>"
+        exit
+    fi
 fi
 
 ./runcond.py $run >/tmp/oput
@@ -177,6 +203,9 @@ normfact_text="<font color=\"$normfact_color\">$normfact_level &plusmn; $normfac
 
 #rm /tmp/oput
 
+last_update_time=`ls -l --time-style=full-iso $histos/run_$run/fiber_2.png |\
+                  awk -F'[ .]' '{print $6,$7}' 2>&1`
+
 cat <<EOI
 Content-type: text/html
 
@@ -206,7 +235,14 @@ Content-type: text/html
     <td align="right">T DAC</td><td align="right">$TDAC_text</td>
 </tr>
 </table>
-<p align="center">relative pulse normalization $normfact_text</p>
+<p align="center">
+relative pulse normalization $normfact_text
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+plots below were generated $last_update_time
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<a href="textlogs/run_${run}.txt">download fit results</a> or
+<a href="$SCRIPT_NAME?regenplots=$run">regenerate plots</a>
+</p>
 
 <hr/>
 <p align="center"><font size="+2">
@@ -214,25 +250,25 @@ Front half-bundle, viewing the scintillating fiber from the open end
 </font></p>
 <table align="center">
 <tr>
- <td><img src="$histos/run_$run/fiber_20.png"/></td>
- <td><img src="$histos/run_$run/fiber_25.png"/></td>
- <td><img src="$histos/run_$run/fiber_30.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_20.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_25.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_30.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_19.png"/></td>
- <td><img src="$histos/run_$run/fiber_24.png"/></td>
- <td><img src="$histos/run_$run/fiber_29.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_19.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_24.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_29.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_18.png"/></td>
- <td><img src="$histos/run_$run/fiber_23.png"/></td>
- <td><img src="$histos/run_$run/fiber_28.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_18.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_23.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_28.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_17.png"/></td>
- <td><img src="$histos/run_$run/fiber_22.png"/></td>
- <td><img src="$histos/run_$run/fiber_27.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_17.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_22.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_27.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_16.png"/></td>
- <td><img src="$histos/run_$run/fiber_21.png"/></td>
- <td><img src="$histos/run_$run/fiber_26.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_16.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_21.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_26.png"/></td>
 </tr><tr>
 </table>
 
@@ -242,25 +278,25 @@ Back half-bundle, viewing the scintillating fiber from the open end
 </font></p>
 <table align="center">
 <tr>
- <td><img src="$histos/run_$run/fiber_1.png"/></td>
- <td><img src="$histos/run_$run/fiber_6.png"/></td>
- <td><img src="$histos/run_$run/fiber_11.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_1.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_6.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_11.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_2.png"/></td>
- <td><img src="$histos/run_$run/fiber_7.png"/></td>
- <td><img src="$histos/run_$run/fiber_12.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_2.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_7.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_12.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_3.png"/></td>
- <td><img src="$histos/run_$run/fiber_8.png"/></td>
- <td><img src="$histos/run_$run/fiber_13.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_3.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_8.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_13.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_4.png"/></td>
- <td><img src="$histos/run_$run/fiber_9.png"/></td>
- <td><img src="$histos/run_$run/fiber_14.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_4.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_9.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_14.png"/></td>
 </tr><tr>
- <td><img src="$histos/run_$run/fiber_5.png"/></td>
- <td><img src="$histos/run_$run/fiber_10.png"/></td>
- <td><img src="$histos/run_$run/fiber_15.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_5.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_10.png"/></td>
+ <td><img width="350" src="$histos/run_$run/fiber_15.png"/></td>
 </tr><tr>
 </table>
 </body>
