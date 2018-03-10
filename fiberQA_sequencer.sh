@@ -31,9 +31,10 @@
 #    rcGui window, as well as the way xterm windows pop up on the user's
 #    desktop.  To accommodate random changes in either of these, the
 #    script supports a "calibration" mode.  To calibrate, try
-#	bash> fiberQA_sequencer.sh --calibrate <X11_display>
+#		bash> fiberQA_sequencer.sh --calibrate <X11_display>
 #    The screen calibration below was carried out on a X11 display
-#    of dimensions 1900x1080.
+#    of dimensions 1900x1080, created using a command like the following.
+#		bash> vncserver -geometry 1900x1080 -depth 24 :23
 
 # these settings may be customized
 step1X=501
@@ -295,7 +296,7 @@ xdotool click 1
 sleep 20
 
 # now carry out the Vbias sequence
-$TAGMutilities/do_sequence.sh -L -d 20
+$TAGMutilities/do_sequence.sh -L -d 2 
 
 # measurement complete, shut it down
 echo click stop
@@ -308,11 +309,15 @@ xdotool click 1
 sleep 2
 echo kill the rest of the windows
 for n in 1 2 3 4 5 6 7; do
+    echo active window $n is `xdotool getactivewindow` >> /tmp/awl
     xdotool key ctrl+c
     sleep 1
 done
 xdotool key ctrl+d
 sleep 2
 xdotool key ctrl+d
+
+cat /tmp/awl | mail -s "check me" richard.t.jones@uconn.edu
+rm /tmp/awl
 
 exit 0
