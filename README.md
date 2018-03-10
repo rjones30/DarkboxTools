@@ -24,19 +24,19 @@ As the above list indicates, only the light output from the first 5 fibers in th
 1. 0x0 - all Vbias voltages are off
 2. 0x101 - only fibers 1 and 16 are lit
 3. 0x201 - only fibers 2 and 17 are lit
-4. 0x201 - only fibers 3 and 18 are lit
-5. 0x201 - only fibers 4 and 19 are lit
-6. 0x201 - only fibers 5 and 20 are lit
-7. 0x201 - only fibers 6 and 21 are lit
-8. 0x201 - only fibers 7 and 22 are lit
-9. 0x201 - only fibers 8 and 23 are lit
-10. 0x201 - only fibers 9 and 24 are lit
-11. 0x201 - only fibers 10 and 25 are lit
-12. 0x201 - only fibers 11 and 26 are lit
-13. 0x201 - only fibers 12 and 27 are lit
-14. 0x201 - only fibers 13 and 28 are lit
-15. 0x201 - only fibers 14 and 29 are lit
-16. 0x201 - only fibers 15 and 30 are lit
+4. 0x301 - only fibers 3 and 18 are lit
+5. 0x401 - only fibers 4 and 19 are lit
+6. 0x501 - only fibers 5 and 20 are lit
+7. 0x601 - only fibers 6 and 21 are lit
+8. 0x701 - only fibers 7 and 22 are lit
+9. 0x801 - only fibers 8 and 23 are lit
+10. 0x901 - only fibers 9 and 24 are lit
+11. 0xa01 - only fibers 10 and 25 are lit
+12. 0xb01 - only fibers 11 and 26 are lit
+13. 0xc01 - only fibers 12 and 27 are lit
+14. 0xd01 - only fibers 13 and 28 are lit
+15. 0xe01 - only fibers 14 and 29 are lit
+16. 0xf01 - only fibers 15 and 30 are lit
 16. 0xff1 - Vbias values are changing, do not use
 
 ## Quick start guide
