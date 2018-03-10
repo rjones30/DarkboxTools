@@ -10,3 +10,6 @@
 *.pyc
 *.o
 *.so
+*.log
+textlogs
+histos
