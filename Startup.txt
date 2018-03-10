@@ -1,0 +1,48 @@
+Startup instructions for automatic darkbox data collection
+Richard Jones, James McIntyre
+October 21, 2016
+
+The best way to start a new fiberQA scan is to go the following web page:
+http://zeus.phys.uconn.edu/halld/tagger/fp-microscope/fiberQA-11-2015
+and then append to the URL the following magic words
+?newrun=XXX
+where XXX is your initials, as the requestor of the run. This creates a
+dummy directory in the fiberQA-11-2015 folder called newrun-requested
+and waits. The fiberQA_cron.sh script should be invoked automatically
+every minute or two on a host next to the darkbox, which I call "gluon2"
+in these instructions. The fiberQA_cron.sh script notices the new instance
+of newrun-requested in the fiberQA-11-2015 directory and starts a
+sequence of events that eventually starts a DAQ run, sequences through
+a series of Vbias settings to enable each fiber in the bundle, one at a
+time, then end the run and analyze the data. The end result is a set of
+histograms that are displayed in the web page at the URL listed above.
+
+NOTICE: Certain conditions are required on the gluon2 and ROC computers
+in order for all of this to work. If you have recently rebooted gluon2
+or halldtrg5 (the ROC) this will not work until you take some actions
+listed below.
+
+1) On gluon2, start up a new vnc session using the command listed below.
+   The user account under which this is done must be the same account
+   that executes the fiberQA_cron script to initiate a run.
+
+   $ vncserver -geometry 1900x1080 :23
+
+2) Open the new vnc screen in a vncviewer. Open a new terminal and 
+   start a new instance of ssh-agent in it, then load the ssh key
+   coda_daq_key into the agent. If you need the password, see RTJ.
+
+   $ ssh-add ~/.ssh/coda_daq_key
+
+3) If step 2 completed successfully, you should be able to log from gluon2
+   into halldtrg5 without a password, using a command like the following.
+
+   $ ssh -i ~/.ssh/coda_daq_key halld@halldtrg5
+
+   Once you have logged in, make sure that a symlink "data" exists in the
+   ~halld directory and points to the nfs mount point of the filesystem
+   where the darkbox data should be stored. Currently this should be
+   gluey.phys.uconn.edu:/export/annex2/TAGM-tests but it may move in the
+   future. Make sure that this mount point is visible and writeable by
+   the halld user.
+
