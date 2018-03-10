@@ -93,7 +93,7 @@ int main(int argc, char **argv)
       analyzeEvent(eventTree);
 
       if (event_passes_trigger()) {
-         hnorm->Fill(double(q[11]));
+         hnorm->Fill(double(q[14]));
          v792->Fill();
       }
     }
@@ -164,7 +164,7 @@ void analyzeBank(evio::evioDOMNodeP bankPtr)
     {
       const vector<uint32_t> *vec = bankPtr->getVector<uint32_t>();
       if (vec == NULL) {
-         std::cerr << "?unable to get tdc bank vector" << std::endl;
+         std::cerr << "?unable to get qdc bank vector" << std::endl;
          return;
       }
 
