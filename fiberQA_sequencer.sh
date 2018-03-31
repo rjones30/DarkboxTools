@@ -35,6 +35,15 @@
 #    The screen calibration below was carried out on a X11 display
 #    of dimensions 1900x1080, created using a command like the following.
 #		bash> vncserver -geometry 1900x1080 -depth 24 :23
+#    Once this vnc screen has started, connect to it using vncviewer and
+#    check that the ssh-agent is running. When I tested this procedure,
+#    it was under the jonesrt user. Use ssh-add to set up the ssh key
+#    for login on halldtrg5 without a password. It uses the default id_rsa
+#    key that has been set up for the jonesrt user. Test it using the command
+#    ssh -Y halld@halldtrg5 xterm and confirm that the xterm shows up on
+#    the vnc viewer, and that it does not prompt for a password. Once this
+#    is working, you are ready to initiate darkbox runs using the web
+#    interface.
 
 # these settings may be customized
 step1X=501
